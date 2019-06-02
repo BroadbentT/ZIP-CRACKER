@@ -147,8 +147,13 @@ while True:
 
     elif selection == '2':
         print "Crack Selected    : Hash attack..."
-        print "Crack Status      : Currently unsupported..."
-        exit (True)
+        print "Crack Status      : Creating hash file..."
+        os.system("zip2john " + filename + " > hash.txt")
+        print "Crack Status      : Cracking hash..."
+        os.system("john hash.txt")
+        os.system("john hash.txt --show")
+        os.remove('hash.txt')
+        exit (False)
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
