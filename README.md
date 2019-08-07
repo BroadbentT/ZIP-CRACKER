@@ -1,6 +1,6 @@
 # ZIP-CRACKER
 
-python zip-cracker.py secure.zip
+Usage: python zip-cracker.py secure.zip
 
 | LANGUAGE | FILENAME     | MD5HASH |
 |--------  |---------     |---------|
