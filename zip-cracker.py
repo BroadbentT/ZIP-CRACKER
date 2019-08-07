@@ -76,16 +76,17 @@ if installed == False:
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
-os.system("clear")
-
-print " ________ ____     ____ ____      _    ____ _  _______ __     "
-print "|__  /_ _|  _ \   / ___|  _ \    / \  / ___| |/ / ____|  _ \  "
-print "  / / | || |_) | | |   | |_) |  / _ \| |   | ' /|  _| | |_) | "
-print " / /_ | ||  __/  | |___|  _ <  / ___ \ |___| . \| |___|  _ <  "
-print "/____|___|_|      \____|_| \_\/_/   \_\____|_|\_\_____|_| \_\ "
-print "                                                              "
-print "    BY TERENCE BROADBENT BSc CYBER SECURITY (FIRST CLASS)     "
-print "                                                              "
+def header ():
+   os.system("clear")
+   print " ________ ____     ____ ____      _    ____ _  _______ __     "
+   print "|__  /_ _|  _ \   / ___|  _ \    / \  / ___| |/ / ____|  _ \  "
+   print "  / / | || |_) | | |   | |_) |  / _ \| |   | ' /|  _| | |_) | "
+   print " / /_ | ||  __/  | |___|  _ <  / ___ \ |___| . \| |___|  _ <  "
+   print "/____|___|_|      \____|_| \_\/_/   \_\____|_|\_\_____|_| \_\ "
+   print "                                                              "
+   print "    BY TERENCE BROADBENT BSc CYBER SECURITY (FIRST CLASS)     "
+   print "                                                              "
+   print "FILENAME: " + filename + ".\n"
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
@@ -99,14 +100,16 @@ menu = {}
 menu['[1].']="Dictionary Attack."
 menu['[2].']="Hash Attack."
 menu['[3].']="Brute Force Attack."
-menu['[4].']="Exit"
+menu['[4].']="Exit."
 
 while True: 
+   header()
    options=menu.keys()
    options.sort()
    for entry in options: 
       print entry, menu[entry]
    selection=raw_input("\nPlease Select: ")
+   print ""
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
@@ -117,20 +120,21 @@ while True:
 # -------------------------------------------------------------------------------------
 
    if selection =='1':
-      print "Crack Selected    : Dictionary attack..."
-      dictionary = "/usr/share/wordlists/rockyou.txt"
+      print "Crack Selected    : Dictionary attack."
+      dictionary = "/usr/share/wordlists/rockyou.txt"		# change as required
       if os.path.isfile(dictionary):
-           print "Using Dictionary  : " + dictionary + "..."
+         print "Crack Dictionary  : " + dictionary + "."
       else:
-          print "System Error      : Dictionary not found..."
-          exit(True)
+         print "System Error      : Dictionary not found."
+         exit(True)
+      print "Crack Status      : Cracking file."
       os.system("fcrackzip -v -D -u -p " + dictionary + " " + filename + " > Answer.txt")
       os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
       password = open("Password.txt").readline().rstrip()
       if password == "":	
-          print "Crack Status      : Dictionary exhausted...\n"
+         print "Crack Status      : Dictionary exhausted.\n"
       else:      
-          print "File Password     : " + password
+         print "Cracked Password  : " + password + ".\n"
       os.remove('Answer.txt')
       os.remove('Password.txt')
       exit (False)
@@ -144,21 +148,23 @@ while True:
 # -------------------------------------------------------------------------------------
 
    elif selection == '2':
-      print "Crack Selected    : Hash attack..."
-      print "Crack Status      : Creating hash file..."
+      print "Crack Selected    : Hash attack"
+      print "Crack Status      : Creating hash."
       os.system("zip2john " + filename + " > hash.txt 2>&1")
       os.system("sed 1d hash.txt > hash2.txt")
       os.remove('hash.txt')
-      print "Crack Status      : Cracking hash..."
-      os.system("john hash2.txt > dump.txt 2>&1")
-      os.system("john --show hash2.txt > dump.txt")
+      print "Crack Status      : Comparing hash values."
+      os.system("john hash2.txt --pot=pass.txt > dump.txt 2>&1")
+      password = open("pass.txt").readline()
+      a,b =  password.split(':')
+      b = b.replace('\n','')
+      if password == "":
+         print "Crack Status      : Hash crack exhausted.\n"
+      else:
+         print "Cracked Password  : " + b + "."
       os.remove('hash2.txt')
-      password = open("dump.txt").readline()
-      password = password.replace(filename,'')
-      password = password.replace(':',' ')
-      password = password.replace('/','')
-      print "File Password     : " + password
       os.remove('dump.txt')
+      os.remove('pass.txt')
       exit (False)
 
 # ------------------------------------------------------------------------------------- 
@@ -170,26 +176,24 @@ while True:
 # -------------------------------------------------------------------------------------
 
    elif selection == '3':
-      cracked = False
-      print "Crack Selected    : Brute force attack"
-      print "Crack Status      : Conducting numeric attack first - please wait..."
+      print "Crack Selected    : Brute force attack (1-8 characters)."
+      print "Crack Status      : Conducting numeric attack first."
       os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u " + filename + " > Answer.txt")
       os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
       password = open("Password.txt").readline().rstrip()
       if password == "":	
-         print "Crack Status      : Numeric bruteforce exhausted..."
+         print "Crack Status      : Numeric bruteforce exhausted."
       else:      
-         print "Found Password    : " + password
-         cracked = True
-      if cracked == False:
-         print "Crack Status      : Now trying alphanumeric - please wait..."
+         print "Cracked Password  : " + password + ".\n"
+      if password == "":
+         print "Crack Status      : Now trying alphanumeric"
          os.system("fcrackzip -m zip1 -l 1-8 -u " + filename + " > Answer.txt")
          os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
          password = open("Password.txt").readline().rstrip()
          if password == "":	
-            print "Crack Status      : Alphanumeric bruteforce exhausted..."
+            print "Crack Status      : Alphanumeric bruteforce exhausted.\n"
          else:      
-            print "Found Password    : " + password
+            print "Cracked Password  : " + password + ".\n"
       os.remove('Answer.txt')
       os.remove('Password.txt')
       exit (False)
@@ -204,16 +208,4 @@ while True:
 
    elif selection == '4': 
       exit(False)
-
-# ------------------------------------------------------------------------------------- 
-# AUTHOR  : Terence Broadbent                                                    
-# CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
-# Details : Catch all other entries.
-# Modified: N/A
-# -------------------------------------------------------------------------------------
-
-   else:
-      print "\nOption not available...\n"
-
 #Eof
