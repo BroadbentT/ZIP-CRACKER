@@ -148,7 +148,7 @@ while True:
 # -------------------------------------------------------------------------------------
 
    elif selection == '2':
-      print "Crack Selected    : Hash attack"
+      print "Crack Selected    : Hash attack."
       print "Crack Status      : Creating hash."
       os.system("zip2john " + filename + " > hash.txt 2>&1")
       os.system("sed 1d hash.txt > hash2.txt")
@@ -186,7 +186,7 @@ while True:
       else:      
          print "Cracked Password  : " + password + ".\n"
       if password == "":
-         print "Crack Status      : Now trying alphanumeric"
+         print "Crack Status      : Now trying alphanumeric."
          os.system("fcrackzip -m zip1 -l 1-8 -u " + filename + " > Answer.txt")
          os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
          password = open("Password.txt").readline().rstrip()
