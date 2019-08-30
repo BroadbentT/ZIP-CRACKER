@@ -9,7 +9,7 @@
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Load required imports.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ import fileinput
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Conduct simple and routine tests on supplied arguements.   
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ if filextends != "zip":
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Check all required dependencies are installed on the system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ checklist = ["rockyou", "fcrackzip", "hashcat"]
 installed = True
 
 for check in checklist:
-   cmd = "locate " + check + " > /dev/null"
+   cmd = "locate -i " + check + " > /dev/null"
    checked = os.system(cmd)
    if checked != 0:
       print "\n" + check + " is missing..."
@@ -71,7 +71,7 @@ if installed == False:
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Display my universal banner.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ def header ():
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : The main menu system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Menu option selected - Dictionary attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -142,12 +142,12 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Menu option selected - Hash attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
-   elif selection == '2':
+   if selection == '2':
       print "Crack Selected    : Hash attack."
       print "Crack Status      : Creating hash."
       os.system("zip2john " + filename + " > hash.txt 2>&1")
@@ -170,12 +170,12 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Menu option selected - Brute force attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
-   elif selection == '3':
+   if selection == '3':
       print "Crack Selected    : Brute force attack (1-8 characters)."
       print "Crack Status      : Conducting numeric attack first."
       os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u " + filename + " > Answer.txt")
@@ -201,11 +201,11 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 3.0                                                                
+# Version : 1.0                                                                
 # Details : Menu option selected - Quit program.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
-   elif selection == '4': 
+   if selection == '4': 
       exit(False)
 #Eof
