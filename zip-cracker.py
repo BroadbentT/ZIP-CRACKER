@@ -128,7 +128,7 @@ while True:
          print "System Error      : Dictionary not found."
          exit(True)
       print "Crack Status      : Cracking file."
-      os.system("fcrackzip -v -D -u -p " + dictionary + " " + "'" + filename + "'" + " > Answer.txt")
+      os.system("fcrackzip -v -D -u -p " + dictionary + " '" + filename + "' > Answer.txt")
       os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
       password = open("Password.txt").readline().rstrip()
       if password == "":	
@@ -150,7 +150,7 @@ while True:
    elif selection == '2':
       print "Crack Selected    : Hash attack."
       print "Crack Status      : Creating hash."
-      os.system("zip2john " + "'" + filename + "'" + " > hash.txt 2>&1")
+      os.system("zip2john '" + filename + "' > hash.txt 2>&1")
       os.system("sed 1d hash.txt > hash2.txt")
       os.remove('hash.txt')
       print "Crack Status      : Comparing hash values."
@@ -178,7 +178,7 @@ while True:
    elif selection == '3':
       print "Crack Selected    : Brute force attack (1-8 characters)."
       print "Crack Status      : Conducting numeric attack first."
-      os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u " + "'" + filename + "'" + " > Answer.txt")
+      os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u '" + filename + "' > Answer.txt")
       os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
       password = open("Password.txt").readline().rstrip()
       if password == "":	
@@ -187,7 +187,7 @@ while True:
          print "Cracked Password  : " + password + ".\n"
       if password == "":
          print "Crack Status      : Now trying alphanumeric."
-         os.system("fcrackzip -m zip1 -l 1-8 -u " + "'" + filename + "'" + " > Answer.txt")
+         os.system("fcrackzip -m zip1 -l 1-8 -u '" + filename + "' > Answer.txt")
          os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
          password = open("Password.txt").readline().rstrip()
          if password == "":	
