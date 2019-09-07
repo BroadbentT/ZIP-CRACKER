@@ -9,7 +9,7 @@
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Load required imports.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ import fileinput
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Conduct simple and routine tests on supplied arguements.   
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -46,10 +46,12 @@ if filextends != "zip":
    print "Incorrect file format...."
    exit (True)
 
+filename = "'" + filename + "'"
+
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Check all required dependencies are installed on the system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -57,21 +59,22 @@ if filextends != "zip":
 checklist = ["rockyou", "fcrackzip", "hashcat"]
 installed = True
 
+print ""
 for check in checklist:
    cmd = "locate -i " + check + " > /dev/null"
    checked = os.system(cmd)
    if checked != 0:
-      print "\n" + check + " is missing..."
+      print "I cannot find " + check + "..."
       installed = False
 
 if installed == False:
-   print "Install missing dependencies before you begin...\n"
+   print "\nInstall missing dependencies before you begin...\n"
    exit (True)
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Display my universal banner.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -86,12 +89,12 @@ def header ():
    print "                                                              "
    print "    BY TERENCE BROADBENT BSc CYBER SECURITY (FIRST CLASS)     "
    print "                                                              "
-   print "FILENAME: " + filename + ".\n"
+   print "FILENAME: " + filename + "\n"
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : The main menu system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -114,7 +117,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Menu option selected - Dictionary attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -142,7 +145,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Menu option selected - Hash attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -170,7 +173,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Menu option selected - Brute force attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -201,7 +204,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 1.1                                                                
 # Details : Menu option selected - Quit program.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
