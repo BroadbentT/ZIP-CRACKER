@@ -45,7 +45,7 @@ if os.path.exists(fileName) == 0:
 filextends = fileName[-3:]
 
 if filextends != "zip":
-   print("This is not a .zip file...\n...")
+   print("This is not a .zip file...\n")
    exit ()
 
 # -------------------------------------------------------------------------------------
