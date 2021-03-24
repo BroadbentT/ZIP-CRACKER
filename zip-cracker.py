@@ -9,98 +9,96 @@
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Load required imports.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
 import os
 import sys
+import pyfiglet
+
+from termcolor import colored
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Conduct simple and routine tests on supplied arguements.   
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
 if os.geteuid() != 0:
    print("Please run this python script as root...")
-   exit(True)
+   exit()
 
 if len(sys.argv) < 2:
-   print("Use the command python zip-cracker.py secure.zip...")
-   exit(True)
+   print("Use the command python3 zip-cracker.py secure.zip...")
+   exit()
 
-filename = sys.argv[1]
+fileName = sys.argv[1]
 
-if os.path.exists(filename) == 0:
-   print("File " + filename + " was not found, did you spell it correctly?...")
-   exit(True)
+if os.path.exists(fileName) == 0:
+   print(("File " + fileName + " was not found, did you spell it correctly?..."))
+   exit()
 
-filextends = filename[-3:]
+filextends = fileName[-3:]
 
 if filextends != "zip":
-   print("Incorrect file format....")
-   exit (True)
+   print("This is not a .zip file...\n...")
+   exit ()
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Create function call for my header display.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
 def header ():
    os.system("clear")
-   print(" ________ ____     ____ ____      _    ____ _  _______ ____   ")
-   print("|__  /_ _|  _ \   / ___|  _ \    / \  / ___| |/ / ____|  _ \  ")
-   print("  / / | || |_) | | |   | |_) |  / _ \| |   | ' /|  _| | |_) | ")
-   print(" / /_ | ||  __/  | |___|  _ <  / ___ \ |___| . \| |___|  _ <  ")
-   print("/____|___|_|      \____|_| \_\/_/   \_\____|_|\_\_____|_| \_\ ")
-   print("                                                              ")
-   print("    BY TERENCE BROADBENT BSc CYBER SECURITY (FIRST CLASS)     ")
-   print("                                                              ")
-   print("FILENAME: " + filename + ".\n")
+   ascii_banner = pyfiglet.figlet_format("ZIP CRACKER").upper()
+   print((colored(ascii_banner.rstrip("\n"), 'red', attrs=['bold'])))
+   print((colored("     BY TERENCE BROADBENT BSC CYBER SECURITY (FIRST CLASS)     \n", 'yellow', attrs=['bold'])))
+   print("Selected filename: " + fileName + "\n")
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Check all required dependencies are installed on the system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
-checklist = ["rockyou", "fcrackzip", "hashcat"]
 installed = True
+checklist = ["usr/bin/fcrackzip", "/usr/bin/hashcat"]
 
 header()
 for check in checklist:
    cmd = "locate -i " + check + " > /dev/null"
    checked = os.system(cmd)
    if checked != 0:
-      print("I cannot find " + check + "...")
+      print(("I cannot find " + check + "..."))
       installed = False
 
 if installed == False:
-   print("\nInstall missing dependencies before you begin...\n")
-   exit (True)
+   print("\nInstall the above missing dependencies before you begin...\n")
+   exit ()
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : The main menu system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
 menu = {}
-menu['[1].']="Dictionary Attack."
-menu['[2].']="Hash Attack."
-menu['[3].']="Brute Force Attack."
-menu['[4].']="Exit."
+menu['1']="Dictionary Attack."
+menu['2']="Hash Attack."
+menu['3']="Brute Force Attack."
+menu['4']="Exit."
 
 while True: 
    header()
@@ -108,104 +106,114 @@ while True:
    options.sort()
    for entry in options: 
       print(entry, menu[entry])
-   selection=input("\nPlease Select: ")
-   print("")
+   print(colored("\n[?] Please select an option: ",'green'),end='')
+   selection=input()
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Menu option selected - Dictionary attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
    if selection =='1':
-      print("Crack Selected    : Dictionary attack.")
-      dictionary = "/usr/share/wordlists/rockyou.txt"		# change as you require.
-      if os.path.isfile(dictionary):
-         print("Crack Dictionary  : " + dictionary + ".")
+      dictionary = "/usr/share/wordlists/rockyou.txt"								#  USER CHANGEABLE LOCATION OF DICTIONARY
+      if os.path.exists(dictionary):
+         print("\n[+] Crack status : Using dictionary " + dictionary + "...")
       else:
-         print("System Error      : Dictionary not found.")
-         exit(True)
-      print("Crack Status      : Cracking file.")
-      os.system("fcrackzip -v -D -u -p " + dictionary + " '" + filename + "' > Answer.txt")
-      os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
-      password = open("Password.txt").readline().rstrip()
-      if password == "":	
-         print("Crack Status      : Dictionary exhausted.\n")
-      else:      
-         print("Cracked Password  : " + password + ".\n")
-      os.remove('Answer.txt')
-      os.remove('Password.txt')
-      exit (False)
+         print("\n[-] Crack status : The identified dictionary on line 121 of this script, was not found!!...\n")
+         exit()         
+      print("[+] Crack status : Using words in dictionary as password, please wait...")   
+      os.system("fcrackzip -v -D -u -p " + dictionary + " '" + fileName + "' > F1.tmp")
+      os.system("awk '/pw ==/{print $NF}' F1.tmp > F2.tmp")      
+      password = open("F2.tmp").readline().rstrip()
+      if password != "":	    
+         print(colored("\n[!] Found password '" + password + "'\n",'green'))
+      else:
+         print("[-] Crack status  : Dictionary exhausted...\n")         
+      os.system("rm *.tmp")
+      exit ()
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Menu option selected - Hash attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
    elif selection == '2':
-      print("Crack Selected    : Hash attack.")
-      print("Crack Status      : Creating hash.")
-      os.system("zip2john '" + filename + "' > hash.txt 2>&1")
-      os.system("sed 1d hash.txt > hash2.txt")
-      os.remove('hash.txt')
-      print("Crack Status      : Comparing hash values.")
-      os.system("john hash2.txt --pot=pass.txt > dump.txt 2>&1")
-      password = open("pass.txt").readline()
-      a,b =  password.split(':')
-      b = b.replace('\n','')
-      if password == "":
-         print("Crack Status      : Hash crack exhausted.\n")
+      if not os.path.exists("/usr/sbin/zip2john"):								# USER CHANGEABLE LOCATION OF ZIP2JOHN
+         print("\n[-] Crack status : The identified file on line 147 of this script, was not found!!...")	
+         exit()         
+      os.system("zip2john '" + fileName + "' > F1.tmp 2>&1")
+      os.system("sed -i '1d' F1.tmp")
+      os.system("sed -i 's/" + fileName + "://g' F1.tmp")      
+      hashdata = open("F1.tmp").readline().rstrip()
+      print("\n[+] Crack status : Hash extracted " + hashdata[:55] + "...")      
+      print("[+] Crack status : Comparing hash values, please wait...")
+      os.system("john F1.tmp --pot=F2.tmp > F3.tmp 2>&1")     
+      password = open("F2.tmp").readline()
+      null,hashpass =  password.split(':')
+      if password != "":
+         print(colored("\n[!] Found password '" + hashpass.rstrip("\n") + "'\n",'green'))
       else:
-         print("Cracked Password  : " + b + ".")
-      os.remove('hash2.txt')
-      os.remove('dump.txt')
-      os.remove('pass.txt')
-      exit (False)
+         print("Crack status : Hash values exhausted\n")
+      os.system("rm *.tmp")
+      exit ()
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Menu option selected - Brute force attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
-   elif selection == '3':
-      print("Crack Selected    : Brute force attack (1-8 characters).")
-      print("Crack Status      : Conducting numeric attack first.")
-      os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u '" + filename + "' > Answer.txt")
-      os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
-      password = open("Password.txt").readline().rstrip()
-      if password == "":	
-         print("Crack Status      : Numeric bruteforce exhausted.")
-      else:      
-         print("Cracked Password  : " + password + ".\n")
-      if password == "":
-         print("Crack Status      : Now trying alphanumeric.")
-         os.system("fcrackzip -m zip1 -l 1-8 -u '" + filename + "' > Answer.txt")
-         os.system("awk '/pw ==/{print $NF}' Answer.txt > Password.txt")
-         password = open("Password.txt").readline().rstrip()
-         if password == "":	
-            print("Crack Status      : Alphanumeric bruteforce exhausted.\n")
-         else:      
-            print("Cracked Password  : " + password + ".\n")
-      os.remove('Answer.txt')
-      os.remove('Password.txt')
-      exit (False)
+   if selection == '3':
+      print("\n[+] Crack status : Conducting numeric attack first (1-8 characters)...")
+      os.system("fcrackzip -c 1 -m zip1 -l 1-8 -u '" + fileName + "' > F1.tmp")
+      os.system("awk '/pw ==/{print $NF}' F1.tmp > F2.tmp")      
+      password = open("F2.tmp").readline().rstrip()
+      if password != "":	
+         print(colored("\n[!] Found password '" + password + "'\n",'green'))
+         os.system("rm *.tmp")
+         exit()
+      else:
+         print("[-] Crack status : Numeric bruteforce exhausted...")
+      print("[+] Crack status : Now trying alphanumeric (1-8 characters)...")
+      os.system("fcrackzip -m zip1 -l 1-8 -u '" + fileName + "' > F1.tmp")
+      os.system("awk '/pw ==/{print $NF}' F1.tmp > F2.tmp")
+      password = open("F2.tmp").readline().rstrip()         
+      if password != "":	   
+         print(colored("\n[!] Found password '" + password + "'\n",'green'))
+      else:
+         print("[-] Crack status : Alphanumeric bruteforce exhausted...\n")
+      os.system("rm *.tmp")
+      exit()
 
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 1.0                                                                
+# Version : 2.0                                                                
 # Details : Menu option selected - Quit program.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
 
-   elif selection == '4': 
-      exit(False)
+   if selection == '4': 
+      print("\n")
+      quit()
+      
+# ------------------------------------------------------------------------------------- 
+# AUTHOR  : Terence Broadbent                                                    
+# CONTRACT: GitHub                                                               
+# Version : 2.0                                                                
+# Details : Catch all other entries.
+# Modified: N/A
+# -------------------------------------------------------------------------------------
+
+   else:
+      pass
+
 #Eof
