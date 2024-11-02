@@ -9,7 +9,7 @@
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Load required imports.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ from termcolor import colored
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Conduct simple and routine tests on supplied arguements.   
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ if filextends != "zip":
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Create function call for my header display.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -60,13 +60,13 @@ def header ():
    os.system("clear")
    ascii_banner = pyfiglet.figlet_format("ZIP CRACKER").upper()
    print((colored(ascii_banner.rstrip("\n"), 'red', attrs=['bold'])))
-   print((colored("     BY TERENCE BROADBENT BSC CYBER SECURITY (FIRST CLASS)     \n", 'yellow', attrs=['bold'])))
+   print((colored("    BY TERENCE BROADBENT BSC CYBER SECURITY (FIRST CLASS)     \n", 'yellow', attrs=['bold'])))
    print("Selected filename: " + fileName + "\n")
 
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Check all required dependencies are installed on the system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
@@ -89,16 +89,16 @@ if installed == False:
 # -------------------------------------------------------------------------------------
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : The main menu system.
 # Modified: N/A                                                               
 # -------------------------------------------------------------------------------------
 
 menu = {}
-menu['1']="Dictionary Attack."
-menu['2']="Hash Attack."
-menu['3']="Brute Force Attack."
-menu['4']="Exit."
+menu['1.']="Dictionary Attack."
+menu['2.']="Hash Attack."
+menu['3.']="Brute Force Attack."
+menu['4.']="Exit."
 
 while True: 
    header()
@@ -112,7 +112,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Menu option selected - Dictionary attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Menu option selected - Hash attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Menu option selected - Brute force attack.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Menu option selected - Quit program.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ while True:
 # ------------------------------------------------------------------------------------- 
 # AUTHOR  : Terence Broadbent                                                    
 # CONTRACT: GitHub                                                               
-# Version : 2.0                                                                
+# Version : 3.0                                                                
 # Details : Catch all other entries.
 # Modified: N/A
 # -------------------------------------------------------------------------------------
